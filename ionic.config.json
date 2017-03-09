@@ -1,0 +1,12 @@
+{
+  "name": "Ionic2Weather",
+  "app_id": "",
+  "v2": true,
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/api/forecast",
+      "proxyUrl": "https://api.darksky.net/forecast/f1320e7017cb3054c6a410d15b09c207"
+    }
+  ]
+}
