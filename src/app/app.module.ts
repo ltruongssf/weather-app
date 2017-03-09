@@ -10,11 +10,13 @@ import { WeatherPage } from '../pages/weather/weather';
 import { GeocodeService } from '../providers/geocode-service';
 import { WeatherService } from '../providers/weather-service';
 import { LocationsService } from '../providers/locations-service';
+//Pipes
+import { Weathericon } from '../pipes/weathericon';
 
 const imports = [MyApp, Page1, Page2, LocationsPage, WeatherPage];
 
 @NgModule({
-  declarations: imports,
+  declarations: [imports, Weathericon],
   imports: [
     IonicModule.forRoot(MyApp)
   ],

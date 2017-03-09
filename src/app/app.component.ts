@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 //Pages
 import { LocationsPage } from '../pages/locations/locations';
@@ -9,6 +9,7 @@ import { WeatherService } from '../providers/weather-service';
 import { LocationsService } from '../providers/locations-service';
 //Interfaces
 import { CurrentLoc } from '../interfaces/current-loc';
+import { WeatherLocation } from '../interfaces/weather-location';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,10 +24,14 @@ export class MyApp {
   constructor(
     public platform: Platform,
     public weatherService: WeatherService,
-    public locationsService: LocationsService
+    public locationsService: LocationsService,
+    public events: Events
   ) {
     this.initializeApp();
     this.getMyLocations();
+    // events.subscribe('locations:updated', (data) => {
+    //   this.getMyLocations();
+    // });
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -44,16 +49,16 @@ export class MyApp {
   }
   
   getMyLocations(){
-    this.locationsService.getLocations().then(res => {
+    this.locationsService.locations$.subscribe( ( locs: Array<WeatherLocation> ) => {
       this.pages = [
         { title: 'Edit Locations', component: LocationsPage, icon: 'create' },
         { title: 'Current Location', component: WeatherPage, icon: 'pin' }
       ];
-      for (let newLoc of res) {
+      for (let newLoc of locs) {
         this.pages.push(newLoc);
       }
     });
-  }
+}
 
   initializeApp() {
     this.platform.ready().then(() => {
